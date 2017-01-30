@@ -1,12 +1,16 @@
 const path = require('path');
 
 module.exports = {
-  entry: './frontend/index.js',
-  output: {filename: './static/bundle.js'},
+  entry: './frontend/index.jsx',
+  output: {filename: './static/js/bundle.js'},
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  devtool: 'source-map',
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: [/\.jsx?$/, /\.js?$/],
         exclude: /node-modules/,
         loader: 'babel-loader',
         query: {presets: ['react', 'es2015']}
