@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.methods.generateAuthToken = function() {
   const user = this;
   const access = 'auth';
-  const token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET).toString();
+  const token = jwt.sign({_id: user._id.toHexString(), email: user.email, admin: user.admin, access}, process.env.JWT_SECRET).toString();
 
   user.tokens.push({access, token});
 
@@ -94,44 +94,6 @@ UserSchema.statics.findByCredentials = function(email, password) {
   });
 };
 
-// UserSchema.methods.validPassword = function(password) {
-//   var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-//   return this.hash === hash;
-// };
-//
-// UserSchema.methods.setPassword = function(password){
-//   this.salt = crypto.randomBytes(16).toString('hex');
-//   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-// };
-//
-// UserSchema.methods.generateJWT = function() {
-//   var today = new Date();
-//   var exp = new Date(today);
-//   exp.setDate(today.getDate() + 60);
-//
-//   return jwt.sign({
-//     id: this._id,
-//     username: this.username,
-//     exp: parseInt(exp.getTime() / 1000),
-//   }, secret);
-// };
-//
-// UserSchema.methods.toAuthJSON = function(){
-//   return {
-//     username: this.username,
-//     email: this.email,
-//     token: this.generateJWT()
-//   };
-// };
-
-// UserSchema.methods.removeToken = function(token) {
-//   let user = this;
-//   return user.update({
-//     $pull: {
-//       tokens: { token }
-//     }
-//   });
-// }
 
 UserSchema.pre('save', function (next) {
   const user = this;
@@ -148,8 +110,6 @@ UserSchema.pre('save', function (next) {
   }
 
 });
-
-// UserSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model('User', UserSchema);
 

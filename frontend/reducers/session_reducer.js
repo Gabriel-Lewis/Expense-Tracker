@@ -18,7 +18,7 @@ const SessionReducer = (state = INITIAL_STATE, action) => {
     case USER_FROM_TOKEN:
       return { user: null, status:'token-user', error: null, loading: true}
     case USER_FROM_TOKEN_SUCCESS:
-      return { user: action.user, status:'authenticated', error:null, loading: false};
+      return { user: action.payload, status:'authenticated', error:null, loading: false};
     case SIGN_UP_USER:
       return { user: null, status:'signup', error:null, loading: true};
     case SIGN_UP_USER_SUCCESS:

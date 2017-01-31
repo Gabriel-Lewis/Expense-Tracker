@@ -3,9 +3,11 @@ import {connect} from 'react-redux';
 import {fetchExpenses, fetchExpensesSuccess} from '../../actions/expense_actions';
 import ExpenseIndex from './expense_index';
 
-const mapStateToProps = ({expense}) => ({
-  expenses: expense.expensesList.expenses
-})
+const mapStateToProps = ({expense}) => {
+  return {
+  expenses: expense.expenses
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   fetchExpenses: () => {
@@ -15,7 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
     dispatch(fetchExpenses(token))
       .then((res) => {
-        dispatch(fetchExpensesSuccess(res.payload.data.user))
+        dispatch(fetchExpensesSuccess(res.payload.data.expenses))
       })
   },
 })

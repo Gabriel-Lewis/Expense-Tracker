@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const {User} = require('./../models/user');
-var passport = require('passport');
 
 const signup = (req, res) => {
 
@@ -14,7 +13,7 @@ const signup = (req, res) => {
   }).then((token) => {
     res.json({ user: res_user, token: token })
   }).catch((e) => {
-    res.status(404).send(e);
+    res.status(400).send(e);
   })
 }
 
@@ -23,10 +22,10 @@ const login = (req, res) => {
 
   User.findByCredentials(body.email, body.password).then((user)=> {
     return user.generateAuthToken().then((token) => {
-      res.json({user: user, token: token})
+      res.json({user: user, token: token});
     })
-  }).catch(() => {
-    res.status(400).send();
+  }).catch((e) => {
+    res.status(400).send(e);
   })
 }
 

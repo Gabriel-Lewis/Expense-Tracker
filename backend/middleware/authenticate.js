@@ -17,7 +17,6 @@ const jwt = require('jsonwebtoken');
 // };
 
 const authenticate = (req, res, next) => {
-  console.log(req.headers);
   var token = req.headers['token'];
   if (!token) return next();
 

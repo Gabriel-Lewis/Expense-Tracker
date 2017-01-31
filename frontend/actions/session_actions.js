@@ -1,4 +1,3 @@
-import {signUp, logIn, logOut, requestUser} from '../api_util/user_api_util'
 import axios from 'axios';
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";

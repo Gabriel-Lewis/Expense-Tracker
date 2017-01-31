@@ -1,11 +1,14 @@
 const _ = require('lodash');
 const {ObjectID} = require('mongodb');
-const Expense = require('../models/expense');
+const {Expense} = require('../models/expense');
 
 const create = (req, res) => {
   const expense = new Expense({
-    text: req.body.text,
-    _creator: req.user._id
+    description: req.body.description,
+    transactionDate: req.body.transactionDate,
+    amount: req.body.amount,
+    author: req.user,
+    authorEmail: req.user.email
   });
   expense.save().then((doc) => {
     res.send(doc)
@@ -18,19 +21,25 @@ const read = (req, res) => {
   var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
-    return res.status(404).send('404 page not found')
+    return res.status(400).send('404 page not found')
   }
 
-  Expense.findOne({_id: id, _creator: req.user._id}).then((expense) => {
+  Expense.findOne({_id: id, author: req.user}).then((expense) => {
     if (!expense) {
       return res.status(404).send('404 page not found')
     }
-    res.send({expense});
+    res.send(expense);
   }).catch((e) => res.send(e))
 }
 
 const readAll = (req, res) => {
-  
+  if (req.user.admin) {
+    Expense.find({}).then((expenses) => {
+      res.send({expenses})
+    }, (e) => {
+      res.status(400).send(e)
+    })
+  }
   Expense.find({
     author: req.user._id
   }).then((expenses) => {
@@ -42,10 +51,42 @@ const readAll = (req, res) => {
 
 const update = (req, res) => {
 
+  var id = req.params.id;
+  var body = _.pick(req.body, ['description', 'transactionDate', 'amount']);
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Expense.findOneAndUpdate({_id: id, author: req.user}, {$set: body}, {new: true})
+  .then((expense) => {
+    if (!expense) {
+      return res.status(404).send();
+    }
+
+    res.send({expense});
+  }).catch((e) => {
+    res.status(400).send(e);
+  })
 }
 
 const remove = (req, res) => {
+  var id = req.params.id;
 
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Expense.findOneAndRemove({_id: id, author: req.user})
+  .then((expense) => {
+    if (!expense) {
+      return res.status(404).send();
+    }
+
+    res.send({expense});
+  }).catch((e) => {
+    res.status(400).send();
+  });
 }
 
 module.exports = {

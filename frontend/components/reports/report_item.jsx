@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import {Link, withRouter} from 'react-router';
 
-const ExpenseItem = ({date, amount, email, description,id}) => {
+const ReportItem = ({date, amount, email, description,id}) => {
   return (
     <li className='expense-item'>
       <p>{description}</p>
@@ -13,4 +13,4 @@ const ExpenseItem = ({date, amount, email, description,id}) => {
   )
 }
 
-export default withRouter(ExpenseItem);
+export default withRouter(ReportItem);

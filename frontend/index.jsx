@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import configureStore from './store/store';
+import store from './store/store';
 import routes from './routes';
 import {Provider} from 'react-redux';
 import {Router, browserHistory} from 'react-router';
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    const store = configureStore();
+    // const store = configureStore();
     const main = document.getElementById('main');
     ReactDOM.render(
       <Provider store={store}>

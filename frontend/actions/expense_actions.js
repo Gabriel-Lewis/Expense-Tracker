@@ -1,30 +1,24 @@
 import axios from 'axios';
 
-//Expense list
 export const FETCH_EXPENSES = 'FETCH_EXPENSES';
 export const FETCH_EXPENSES_SUCCESS = 'FETCH_EXPENSES_SUCCESS';
 export const FETCH_EXPENSES_FAILURE = 'FETCH_EXPENSES_FAILURE';
 export const RESET_EXPENSES = 'RESET_EXPENSES';
 
-//Create new post
 export const CREATE_EXPENSE = 'CREATE_EXPENSE';
 export const CREATE_EXPENSE_SUCCESS = 'CREATE_EXPENSE_SUCCESS';
 export const CREATE_EXPENSE_FAILURE = 'CREATE_EXPENSE_FAILURE';
+
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
+export const UPDATE_EXPENSE_SUCCESS = 'UPDATE_EXPENSE_SUCCESS';
+export const UPDATE_EXPENSE_FAILURE = 'UPDATE_EXPENSE_FAILURE';
 export const RESET_NEW_EXPENSE = 'RESET_NEW_EXPENSE';
 
-//Validate post fields like Title, Categries on the server
-export const VALIDATE_EXPENSE_FIELDS = 'VALIDATE_EXPENSE_FIELDS';
-export const VALIDATE_EXPENSE_FIELDS_SUCCESS = 'VALIDATE_EXPENSE_FIELDS_SUCCESS';
-export const VALIDATE_EXPENSE_FIELDS_FAILURE = 'VALIDATE_EXPENSE_FIELDS_FAILURE';
-export const RESET_EXPENSE_FIELDS = 'RESET_EXPENSE_FIELDS';
-
-//Fetch post
 export const FETCH_EXPENSE = 'FETCH_EXPENSE';
 export const FETCH_EXPENSE_SUCCESS = 'FETCH_EXPENSE_SUCCESS';
 export const FETCH_EXPENSE_FAILURE = 'FETCH_EXPENSE_FAILURE';
 export const RESET_ACTIVE_EXPENSE = 'RESET_ACTIVE_EXPENSE';
 
-//Delete post
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const DELETE_EXPENSE_SUCCESS = 'DELETE_EXPENSE_SUCCESS';
 export const DELETE_EXPENSE_FAILURE = 'DELETE_EXPENSE_FAILURE';
@@ -70,7 +64,7 @@ export function createExpense(props, tokenFromStorage) {
     data: props,
     url: `${ROOT_URL}/expenses`,
     headers: {
-      'Authorization': `Bearer ${tokenFromStorage}`
+      'token': `${tokenFromStorage}`
     }
   });
 
@@ -94,6 +88,29 @@ export function createExpenseFailure(error) {
   };
 }
 
+export function updateExpense(expense, token) {
+  const request = axios({
+    method: 'put',
+    data: expense,
+    url: `${ROOT_URL}/expenses/${expense._id}`,
+    headers: {
+      'token': `${token}`
+    }
+  });
+
+  return {
+    type: UPDATE_EXPENSE,
+    payload: request
+  };
+}
+
+export function updateExpenseSuccess(expense) {
+  return {
+    type: UPDATE_EXPENSE_SUCCESS,
+    payload: expense
+  };
+}
+
 export function resetNewExpense() {
   return {
     type: RESET_NEW_EXPENSE
@@ -105,11 +122,14 @@ export function resetDeletedExpense() {
   return {
     type: RESET_DELETED_EXPENSE
   }
-}
-;
+};
 
-export function fetchExpense(id) {
-  const request = axios.get(`${ROOT_URL}/expenses/${id}`);
+export function fetchExpense(id, token) {
+  const request = axios({
+    url: `${ROOT_URL}/expenses/${id}`,
+    method: 'get',
+    headers: { 'token': token }
+  })
 
   return {
     type: FETCH_EXPENSE,
@@ -139,12 +159,12 @@ export function resetActiveExpense() {
 }
 
 
-export function deleteExpense(id, tokenFromStorage) {
+export function deleteExpense(id, token) {
   const request = axios({
     method: 'delete',
     url: `${ROOT_URL}/expenses/${id}`,
     headers: {
-      'Authorization': `Bearer ${tokenFromStorage}`
+      'token': `${token}`
     }
   });
   return {

@@ -5,7 +5,7 @@ import React,{Component} from 'react';
 // import 'rc-calendar/assets/index.css'
 // import 'react-datepicker/dist/react-datepicker.css';
 
-export default class NewExpense extends Component {
+export default class NewReport extends Component {
   constructor(props){
       super(props);
       this.state = {
@@ -21,10 +21,10 @@ export default class NewExpense extends Component {
 
   componentWillReceiveProps(newProps) {
     this.setState({
-      description: newProps.activeExpense.description,
-      amount: newProps.activeExpense.amount,
-      transactionDate: newProps.activeExpense.transactionDate,
-      _id: newProps.activeExpense._id
+      description: newProps.activeReport.description,
+      amount: newProps.activeReport.amount,
+      transactionDate: newProps.activeReport.transactionDate,
+      _id: newProps.activeReport._id
     });
 
   }
@@ -40,14 +40,14 @@ export default class NewExpense extends Component {
   }
 
   handleDelete() {
-    this.props.deleteExpense(this.state._id)
+    this.props.deleteReport(this.state._id)
   }
 
     handleSubmit () {
       if (this.props.isEditting) {
-        this.props.updateExpense(this.state)
+        this.props.updateReport(this.state)
       } else {
-      this.props.createExpense(this.state);
+      this.props.createReport(this.state);
       }
     }
 
@@ -60,7 +60,7 @@ export default class NewExpense extends Component {
     render() {
         return (
 
-            <div className="new-expense-form">
+            <div className="new-report-form">
               <label>Description<input
                 type='text'
                 value={this.state.description}

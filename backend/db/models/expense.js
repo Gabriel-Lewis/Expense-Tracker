@@ -2,20 +2,24 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 var ExpenseSchema = new mongoose.Schema({
-  title: String,
   description: String,
   amount: Number,
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  transactionDate: Date,
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  authorEmail: String
 }, {timestamps: true});
 
-ExpenseSchema.methods.toJSONFor = function(user){
+ExpenseSchema.methods.toJSONFor = (user) => {
   return {
-    title: this.title,
     description: this.description,
+    amount: this.amount,
+    transactionDate: this.transactionDate,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     author: this.author.toJSON(user)
   };
 };
 
-mongoose.model('Expense', ExpenseSchema);
+const Expense = mongoose.model('Expense', ExpenseSchema);
+
+module.exports = { Expense }
