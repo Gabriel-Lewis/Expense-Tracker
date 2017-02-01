@@ -10,19 +10,21 @@ export default class NewExpense extends Component {
       super(props);
       this.state = {
         description: "",
-        amount: 0,
+        amount: 0.00,
         transactionDate: ""
       };
 
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.updateCurrency = this.updateCurrency.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
+    let amount = (newProps.activeExpense.amount / 100).toFixed(2)
     this.setState({
       description: newProps.activeExpense.description,
-      amount: newProps.activeExpense.amount,
+      amount: amount,
       transactionDate: newProps.activeExpense.transactionDate,
       _id: newProps.activeExpense._id
     });
@@ -51,7 +53,18 @@ export default class NewExpense extends Component {
       }
     }
 
+    updateCurrency(event) {
+      let amount = event.target.value
+      amount = parseFloat(amount.replace(/,/g, ""))
+                    .toFixed(2)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      this.setState({amount})
+    }
+
     update(field) {
+
       return e => this.setState({
         [field]: e.currentTarget.value
       });
@@ -69,12 +82,13 @@ export default class NewExpense extends Component {
               <label>Date<input
                 value={this.state.transactionDate}
                 type='text'
-                onChange={this.update("transactionDate")}
+                onChange={this.update('transactionDate')}
                 /></label>
               <label>Amount<input
                 type="text"
                 value={this.state.amount}
-                onChange={this.update("amount")}
+                onBlur={this.updateCurrency}
+                onChange={this.update('amount')}
                 /></label>
               <button
                 onClick={this.handleSubmit}

@@ -6,7 +6,8 @@ var ReportSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   expenseList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Expense' }],
   startDate: Date,
-  endDate: Date
+  endDate: Date,
+  totalSpent: Number
 }, {timestamps: true});
 
 ReportSchema.methods.toJSONFor = function(user){
@@ -22,9 +23,16 @@ ReportSchema.methods.toJSONFor = function(user){
 
 ReportSchema.pre('save', function (next) {
   const report = this
-  console.log(report);
-  Expense.find({author: report.author}).where('transactionDate').lt(report.endDate).gt(report.startDate).then((expenses) => {
-    console.log(expenses);
+  Expense.find({author: report.author})
+  .where('transactionDate')
+  .lt(report.endDate)
+  .gt(report.startDate)
+  .then((expenses) => {
+    let total = 0
+    expenses.forEach((expense) => {
+      total += expense.amount
+    });
+    report.totalSpent = total;
     report.expenseList = expenses;
     next()
   }, (e) => {

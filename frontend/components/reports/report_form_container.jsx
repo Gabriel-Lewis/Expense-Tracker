@@ -8,10 +8,10 @@ import {
   deleteReport,
   deleteReportSuccess} from '../../actions/report_actions';
 
-import NewReport from './new_expense';
+import ReportForm from './report_form';
 
-const mapStateToProps = ({expense}) => ({
-  activeReport: expense.activeReport.expense
+const mapStateToProps = ({report}) => ({
+  activeReport: report.activeReport
 })
 
 const mapDispatchToProps = (dispatch, {location}) => {
@@ -19,20 +19,20 @@ const mapDispatchToProps = (dispatch, {location}) => {
   let token = localStorage.getItem('jwtToken');
 
   return {
-  createReport: (expense) => {
-    dispatch(createReport(expense, token))
+  createReport: (report) => {
+    dispatch(createReport(report, token))
     .then((response) => {
-      dispatch(createReportSuccess(response.data.expense))
+      dispatch(createReportSuccess(response.data.report))
     })
   },
-  updateReport: (expense) => {
-    dispatch(updateReport(expense, token))
+  updateReport: (report) => {
+    dispatch(updateReport(report, token))
       .then((response) => {
-        dispatch(updateReportSuccess(response.payload.data.expense))
+        dispatch(updateReportSuccess(response.payload.data.report))
       })
     },
-    deleteReport: (id) => {
-      dispatch(deleteReport(id, token))
+    deleteReport: (reportId) => {
+      dispatch(deleteReport(reportId, token))
       .then((response) => {
         dispatch(deleteReportSuccess())
       })
@@ -41,4 +41,4 @@ const mapDispatchToProps = (dispatch, {location}) => {
   }
 }
 
-export default connect (mapStateToProps,mapDispatchToProps)(NewReport);
+export default connect (mapStateToProps,mapDispatchToProps)(ReportForm);

@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+require('mongoose-currency').loadType(mongoose);
+var Currency = mongoose.Types.Currency;
 
 var ExpenseSchema = new mongoose.Schema({
   description: String,
-  amount: Number,
+  amount: {type: Currency},
   transactionDate: Date,
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   authorEmail: String

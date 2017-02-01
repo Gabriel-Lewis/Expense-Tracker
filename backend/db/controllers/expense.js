@@ -7,8 +7,7 @@ const create = (req, res) => {
     description: req.body.description,
     transactionDate: req.body.transactionDate,
     amount: req.body.amount,
-    author: req.user,
-    authorEmail: req.user.email
+    author: req.user
   });
   expense.save().then((doc) => {
     res.send(doc)
@@ -34,7 +33,7 @@ const read = (req, res) => {
 
 const readAll = (req, res) => {
   if (req.user.admin) {
-    Expense.find({}).then((expenses) => {
+    Expense.find({}).populate('author').then((expenses) => {
       res.send({expenses})
     }, (e) => {
       res.status(400).send(e)
@@ -42,7 +41,7 @@ const readAll = (req, res) => {
   }
   Expense.find({
     author: req.user._id
-  }).then((expenses) => {
+  }).populate('author').then((expenses) => {
     res.send({expenses})
   }, (e) => {
     res.status(400).send(e)

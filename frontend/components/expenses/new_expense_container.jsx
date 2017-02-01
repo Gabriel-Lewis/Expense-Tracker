@@ -11,7 +11,7 @@ import {
 import NewExpense from './new_expense';
 
 const mapStateToProps = ({expense}) => ({
-  activeExpense: expense.activeExpense.expense
+  activeExpense: expense.activeExpense
 })
 
 const mapDispatchToProps = (dispatch, {location}) => {
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch, {location}) => {
   createExpense: (expense) => {
     dispatch(createExpense(expense, token))
     .then((response) => {
-      dispatch(createExpenseSuccess(response.data.expense))
+      dispatch(createExpenseSuccess(response.data))
     })
   },
   updateExpense: (expense) => {

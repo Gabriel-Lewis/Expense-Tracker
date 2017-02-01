@@ -9,8 +9,8 @@ export default class NewReport extends Component {
   constructor(props){
       super(props);
       this.state = {
-        description: "",
-        amount: 0,
+        startDate: "",
+        endDate: 0,
         transactionDate: ""
       };
 
@@ -21,9 +21,8 @@ export default class NewReport extends Component {
 
   componentWillReceiveProps(newProps) {
     this.setState({
-      description: newProps.activeReport.description,
-      amount: newProps.activeReport.amount,
-      transactionDate: newProps.activeReport.transactionDate,
+      startDate: newProps.activeReport.startDate,
+      endDate: newProps.activeReport.endDate,
       _id: newProps.activeReport._id
     });
 
@@ -61,20 +60,15 @@ export default class NewReport extends Component {
         return (
 
             <div className="new-report-form">
-              <label>Description<input
+              <label>Start Date<input
                 type='text'
-                value={this.state.description}
-                onChange={this.update("description")}
+                value={this.state.startDate}
+                onChange={this.update("startDate")}
                 /></label>
-              <label>Date<input
-                value={this.state.transactionDate}
-                type='text'
-                onChange={this.update("transactionDate")}
-                /></label>
-              <label>Amount<input
+              <label>End Date<input
                 type="text"
-                value={this.state.amount}
-                onChange={this.update("amount")}
+                value={this.state.endDate}
+                onChange={this.update("endDate")}
                 /></label>
               <button
                 onClick={this.handleSubmit}

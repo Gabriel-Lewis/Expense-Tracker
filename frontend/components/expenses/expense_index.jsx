@@ -8,7 +8,9 @@ export default class ExpenseIndex extends Component {
     }
 
     componentDidMount() {
-      this.props.fetchExpenses()
+      if (this.props.fetchExpenses) {
+        this.props.fetchExpenses()
+      }
     }
 
     render() {
@@ -19,10 +21,11 @@ export default class ExpenseIndex extends Component {
                   this.props.expenses.map(expense => (
                   <ExpenseItem
                     key={expense._id}
+                    id={expense._id}
                     date={expense.transactionDate}
                     description={expense.description}
                     amount={expense.amount}
-                    email={expense.authorEmail}
+                    email={expense.author.email}
                     id={expense._id}
                     />
                 ))

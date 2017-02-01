@@ -23,6 +23,7 @@ export default class App extends Component {
           onClick={this.props.resetUser}
           >Logout</button>
 				<Link to='/new-expense' >New Expense</Link>
+				<Link to='/new-report'>New Report</Link>
       </nav>
     )
     }

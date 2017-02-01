@@ -8,7 +8,6 @@ import {Router, browserHistory} from 'react-router';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // const store = configureStore();
     const main = document.getElementById('main');
     ReactDOM.render(
       <Provider store={store}>

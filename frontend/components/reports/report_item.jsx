@@ -1,16 +1,30 @@
 import React, { PropTypes } from 'react';
 import {Link, withRouter} from 'react-router';
 
-const ReportItem = ({date, amount, email, description,id}) => {
+import ExpenseItem from '../expenses/expense_item';
+
+const ReportItem = ({startDate,endDate, expenses, id, totalSpent}) => {
   return (
-    <li className='expense-item'>
-      <p>{description}</p>
-      <p>date: {date}</p>
-      <p>amount: {amount}</p>
-      <p>owner-email: {email}</p>
-      <Link to={`/expenses/${id}/edit`}>Edit</Link>
+    <li className='report-item'>
+      <p>Start Date: {startDate}</p>
+      <p>End Date: {endDate}</p>
+      <p>Total Spent: {(totalSpent/100).toFixed(2)}</p>
+      <ul>
+        {expenses.map(expense => (
+          <ExpenseItem
+            key={id, expense._id}
+            description={expense.description}
+            date={expense.transactionDate}
+            amount={expense.amount}
+            email={expense.author.email}
+            id={expense._id}
+            />
+        ))}
+      </ul>
     </li>
   )
 }
 
-export default withRouter(ReportItem);
+export default ReportItem;
+
+//   />

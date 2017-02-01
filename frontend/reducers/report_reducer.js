@@ -7,60 +7,56 @@ import {
 
 import _ from 'lodash';
 
-	// const INITIAL_STATE = {
-	// 						reportsList: {reports: [], error:null, loading: false},
-	// 						newReport: {report:null, error: null, loading: false},
-	// 						deletedReport: {report: null, error:null, loading: false},
-	// 					};
 	const INITIAL_STATE = {
 		reports: [],
-		activeReport: {report:null, error:null},
-		loading: false
+		activeReport: null,
+    newReport: null,
+    deletedReport: null,
+		loading: false,
+    error: null
 	}
 
 export default function(state = INITIAL_STATE, action) {
   let error;
   switch(action.type) {
 
-  case FETCH_REPORTS:// start fetching reports and set loading = true
-  	// return {...state, reportsList: {reports:[], error: null, loading: true} };
-  	return state;
-  case FETCH_REPORTS_SUCCESS:// return list of reports and make loading = false
-    // return {...state, reportsList: {reports: action.payload, error:null, loading: false} };
-    return {...state, reports: action.payload};
+  case FETCH_REPORTS:
+  	return {...state, loading: true}
+  case FETCH_REPORTS_SUCCESS:
+    return {...state, reports: action.payload, loading: false};
   case FETCH_REPORTS_ERRORS:
     error = action.payload || {message: action.payload.message};
-    return {...state,  reportsList: {reports: [], error: error, loading: false} };
+    return {...state,  reportsList: [], error: error, loading: false };
 
   case FETCH_REPORT:
-    return {...state, activeReport:{report: null, loading: true}};
+    return {...state, activeReport:null, loading: true};
   case FETCH_REPORT_SUCCESS:
-    return {...state, activeReport: {report: action.payload, error:null, loading: false}}
+    return {...state, activeReport: action.payload, error:null, loading: false}
   case FETCH_REPORT_ERRORS:
     error = action.payload || {message: action.payload.message};
-    return {...state,  activeReport: {report: null, error:error, loading:false}}
+    return {...state,  activeReport: null, error: error, loading:false}
   case RESET_ACTIVE_REPORT:
-    return {...state, activeReport: {report: null, error:null, loading: false}}
+    return {...state, activeReport: null, error: null, loading: false}
 
   case CREATE_REPORT:
-  	return {...state, newReport: {newReport, loading: true}}
+  	return {...state, newReport: null, loading: true}
   case CREATE_REPORT_SUCCESS:
-  	return {...state, newReport: {report:action.payload, error:null, loading: false}}
+  	return {...state, newReport:action.payload, error:null, loading: false}
   case CREATE_REPORT_ERRORS:
     error = action.payload || {message: action.payload.message};
-  	return {...state, newReport: {report:null, error:error, loading: false}}
+  	return {...state, newReport:null, error:error, loading: false}
   case RESET_NEW_REPORT:
-  	return {...state, newReport:{report:null, error:null, loading: false}}
+  	return {...state, newReport:null, error:null, loading: false}
 
   case DELETE_REPORT:
-   	return { deletedReport: {deletedReport, loading: true}}
+   	return {...state, deletedReport: null, loading: true}
   case DELETE_REPORT_SUCCESS:
-  	return { deletedReport: {report:action.payload, error:null, loading: false}}
+  	return {...state, deletedReport:action.payload, error:null, loading: false}
   case DELETE_REPORT_ERRORS:
     error = action.payload || {message: action.payload.message};
-  	return { deletedReport: {report:null, error:error, loading: false}}
+  	return {...state, deletedReport: null, error:error, loading: false}
   case RESET_DELETED_REPORT:
-  	return {  deletedReport:{report:null, error:null, loading: false}}
+  	return {...state,  deletedReport:null, error:null, loading: false}
   default:
     return state;
   }

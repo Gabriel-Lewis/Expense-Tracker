@@ -22,7 +22,8 @@ const read = (req, res) => {
     return res.status(400).send('404 page not found')
   }
 
-  Report.findOne({_id: id, author: req.user}).then((report) => {
+  Report.findOne({_id: id, author: req.user}).populate('expenseList')
+  .then((report) => {
     if (!report) {
       return res.status(404).send('404 page not found')
     }
@@ -33,7 +34,8 @@ const read = (req, res) => {
 const readAll = (req, res) => {
   Report.find({
     author: req.user._id
-  }).then((reports) => {
+  }).populate('expenseList')
+  .then((reports) => {
     res.send({reports})
   }, (e) => {
     res.status(400).send(e)

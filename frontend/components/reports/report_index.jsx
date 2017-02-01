@@ -19,11 +19,11 @@ export default class ReportIndex extends Component {
                   this.props.reports.map(report => (
                   <ReportItem
                     key={report._id}
-                    date={report.transactionDate}
-                    description={report.description}
-                    amount={report.amount}
-                    email={report.authorEmail}
-                    id={report._id}
+                    id={report.id}
+                    startDate={report.startDate}
+                    endDate={report.endDate}
+                    expenses={report.expenseList}
+                    totalSpent={report.totalSpent}
                     />
                 ))
               }

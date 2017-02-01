@@ -50,6 +50,7 @@
     "css-loader": "^0.26.1",
     "expect": "^1.20.2",
     "mocha": "^3.2.0",
+    "mongoose-currency": "^0.2.0",
     "nodemon": "^1.11.0",
     "style-loader": "^0.13.1",
     "supertest": "^2.0.1"
