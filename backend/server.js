@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000
 
 const user = require('./db/models/user');
 const Expense = require('./db/models/expense');
-// const Report = require('./db/models/report');
+const Report = require('./db/models/report');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
