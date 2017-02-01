@@ -4,6 +4,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+require('../config/index');
 const app = express();
 const {db} = require('./db/db');
 const port = process.env.PORT || 3000
@@ -11,7 +12,6 @@ const port = process.env.PORT || 3000
 const user = require('./db/models/user');
 const Expense = require('./db/models/expense');
 // const Report = require('./db/models/report');
-require('../config/index');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -26,6 +26,4 @@ app.get('*', function (request, response){
 
 app.listen(port)
 
-module.exports = {
-  app
-}
+module.exports = { app }

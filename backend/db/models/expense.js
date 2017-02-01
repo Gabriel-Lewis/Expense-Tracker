@@ -1,14 +1,22 @@
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
 require('mongoose-currency').loadType(mongoose);
 var Currency = mongoose.Types.Currency;
 
 var ExpenseSchema = new mongoose.Schema({
-  description: String,
-  amount: {type: Currency},
-  transactionDate: Date,
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  authorEmail: String
+  description: {
+    type: String,
+    required: [true, "can't be blank"],
+    trim: true
+  },
+  amount: {
+    type: Currency,
+    required: [true, "can't be blank"]
+  },
+  transactionDate: {
+    type: Date,
+    required: [true, "can't be blank"]
+  },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, {timestamps: true});
 
 ExpenseSchema.methods.toJSONFor = (user) => {

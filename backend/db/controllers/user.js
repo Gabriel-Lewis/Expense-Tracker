@@ -31,10 +31,10 @@ const login = (req, res) => {
 
 const logout = (req, res) => {
   req.user.removeToken(req.token).then(() => {
-
-  }), () => {
+    res.status(200).send();
+  }, () => {
     res.status(400).send();
-  };
+  });
 }
 
 const findByToken = (req, res) => {

@@ -20,7 +20,7 @@ const read = (req, res) => {
   var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
-    return res.status(400).send('404 page not found')
+    return res.status(404).send('404 page not found')
   }
 
   Expense.findOne({_id: id, author: req.user}).then((expense) => {
