@@ -4,7 +4,7 @@ import { Link, withRouter, browswerHistory } from 'react-router';
 class SessionForm extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { email: "", password: "" };
+		this.state = { email: "", password: "", admin: false };
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -34,11 +34,30 @@ class SessionForm extends React.Component {
 		}
 	}
 
+	handleInputChange(event) {
+    const target = event.target;
+    const value = target.checked
+    this.setState({ admin: value });
+  }
+
 	navLink() {
 		if (this.props.formType === "login") {
 			return <Link to="/signup">sign up instead</Link>;
 		} else {
 			return <Link to="/login">log in instead</Link>;
+		}
+	}
+
+	adminBox() {
+		if (this.props.formType === "login") {
+			return (<div></div>)
+		} else {
+			return (
+				<label>Admin:<input
+					type="checkbox"
+					checked={this.state.admin}
+					onChange={this.handleInputChange} /></label>
+			)
 		}
 	}
 
@@ -76,6 +95,8 @@ class SessionForm extends React.Component {
 								onChange={this.update("password")}
 								className="login-input" />
 						</label>
+						<br />
+						{this.adminBox()}
 						<br/>
 						<input type="submit" value="Submit" />
 					</div>

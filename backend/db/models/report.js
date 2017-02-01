@@ -5,9 +5,17 @@ var {Expense} = require('./expense');
 var ReportSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   expenseList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Expense' }],
-  startDate: Date,
-  endDate: Date,
-  totalSpent: Number
+  startDate: {
+    type: Date,
+    required: [true, "can't be blank"],
+  },
+  endDate: {
+    type: Date,
+    required: [true, "can't be blank"],
+  },
+  totalSpent: {
+    type: Number
+  }
 }, {timestamps: true});
 
 ReportSchema.methods.toJSONFor = function(user){

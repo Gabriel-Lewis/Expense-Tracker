@@ -13,7 +13,6 @@ export const USER_FROM_TOKEN_SUCCESS = 'USER_FROM_TOKEN_SUCCESS';
 export const USER_FROM_TOKEN_FAILURE = 'USER_FROM_TOKEN_FAILURE';
 
 export function signup(user) {
-  user.admin = true
   let request = axios.post('/api/users', user)
   return {
     type: SIGN_UP_USER,
