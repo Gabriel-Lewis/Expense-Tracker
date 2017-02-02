@@ -19,9 +19,8 @@ app.use(bodyParser.urlencoded({
 
 app.use(require('./routes'));
 app.use(express.static(path.resolve(__dirname , '../static')))
-app.use('/js',express.static(path.join(__dirname, '../static/js')));
-app.use('/css',express.static(path.join(__dirname, '../static/css')));
-app.get('*', function (request, response){
+
+app.get('/*', function (request, response){
     response.sendFile(path.resolve(__dirname, '../static', 'index.html'))
 })
 
