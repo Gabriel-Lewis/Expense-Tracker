@@ -2,6 +2,8 @@
 
 Expense Tracker is a single page web application for recording expenses and generating reports. It is built with Node, Express, Mongo, React, and Redux.
 
+[Live Demo](https://ancient-scrubland-72767.herokuapp.com/)
+
 Run locally with:
 
 ```shell
