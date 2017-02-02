@@ -9,6 +9,18 @@ Run locally with:
   npm start
 ```
 
+Run Tests with:
+
+```shell
+  npm test
+```
+
+or Run Auto Updating Tests with:
+
+```shell
+  npm run test-watch
+```
+
 ### API Routes
 
 The Backend has api routes for creating users, expenses, and reports.
@@ -50,3 +62,32 @@ The Backend has api routes for creating users, expenses, and reports.
   - creates a new report
 - `DELETE /api/reports/:id`
   - Deletes a story
+
+
+  # Schema Information
+
+  ## Users
+  column name     | data type | details
+  ----------------|-----------|-----------------------
+  id              | objectId  | not null, primary key
+  email           | string    | not null, indexed, unique
+  password        | string    | not null
+  token           | array     | not null, indexed, unique
+  admin           | boolean   | not null
+
+  ## Expenses
+  column name     | data type | details
+  ----------------|-----------|-----------------------
+  id              | integer   | not null, primary key
+  description     | string    | not null
+  transactionDate | date      | not null
+  amount          | currency  | not null
+  author          | objectId  | not null, foreign key (references users), indexed
+
+  ## Reports
+  column name | data type | details
+  --------------|-----------|-----------------------
+  id            | objectId  | not null, primary key
+  author        | objectId  | not null, foreign key (references users), indexed
+  totalAmount   | integer   | not null
+  expenses      | array     | not null
