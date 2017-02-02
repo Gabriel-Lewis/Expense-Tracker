@@ -21,6 +21,7 @@ app.use(require('./routes'));
 // app.use(express.static(path.resolve(__dirname , '../static')))
 app.use('/js', express.static(path.resolve(__dirname, '../static/js')));
 app.use('/stylesheets', express.static(path.resolve(__dirname, '../static/stylesheets')));
+
 app.get('/*', function (request, response){
     response.sendFile(path.resolve(__dirname, '../static', 'index.html'))
 })
