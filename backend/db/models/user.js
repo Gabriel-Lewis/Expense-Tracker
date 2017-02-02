@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 const validator = require('validator');
-var uniqueValidator = require('mongoose-unique-validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const {ObjectId} = require('mongodb');
