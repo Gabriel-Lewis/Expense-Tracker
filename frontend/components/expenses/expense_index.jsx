@@ -16,6 +16,7 @@ export default class ExpenseIndex extends Component {
     render() {
         return (
             <div className="expense-index">
+              <h3>Expenses</h3>
               <ul>
                 {
                   this.props.expenses.map(expense => (

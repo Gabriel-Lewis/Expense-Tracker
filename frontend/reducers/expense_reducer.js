@@ -8,11 +8,6 @@ import {
 
 import _ from 'lodash';
 
-	// const INITIAL_STATE = {
-	// 						expensesList: {expenses: [], error:null, loading: false},
-	// 						newExpense: {expense:null, error: null, loading: false},
-	// 						deletedExpense: {expense: null, error:null, loading: false},
-	// 					};
 	const INITIAL_STATE = {
 		expenses: [],
 		activeExpense: null,
@@ -30,7 +25,6 @@ export default function(state = INITIAL_STATE, action) {
   	return {...state, loading: true };
   	return state;
   case FETCH_EXPENSES_SUCCESS:
-    // return {...state, expensesList: {expenses: action.payload, error:null, loading: false} };
     return {...state, expenses: action.payload, loading: false};
   case FETCH_EXPENSES_ERRORS:
     error = action.payload || {message: action.payload.message};

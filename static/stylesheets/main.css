@@ -1,0 +1,67 @@
+body {
+  width: 100%
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+h1, h2, h3, h4, p, a, button, label, input {
+  font-family: avenir;
+}
+
+ul, li {
+  list-style: none;
+  padding-left: 0px;
+  padding-right:0px;
+  margin-left:0px;
+  margin-right:0px;
+  text-align:left;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-self: baseline;
+}
+
+.report-item {
+  padding: 10px;
+  border: 1px black solid;
+  margin: 10px;
+}
+
+.expense-item {
+  padding: 10px;
+  border: 1px black solid;
+  margin: 10px;
+}
+
+.links a {
+  margin-right: 10px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.new-expense-form, .new-report-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+label {
+  margin: 10px;
+}

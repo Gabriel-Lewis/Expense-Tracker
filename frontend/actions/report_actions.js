@@ -26,14 +26,10 @@ export const DELETE_REPORT_SUCCESS = 'DELETE_REPORT_SUCCESS';
 export const DELETE_REPORT_FAILURE = 'DELETE_REPORT_FAILURE';
 export const RESET_DELETED_REPORT = 'RESET_DELETED_REPORT';
 
-
-
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
-
 export function fetchReports(token) {
   const request = axios({
     method: 'get',
-    url: `${ROOT_URL}/reports`,
+    url: `/api/reports`,
     headers: {
     'token': `${token}`
   }
@@ -64,7 +60,7 @@ export function createReport(props, tokenFromStorage) {
   const request = axios({
     method: 'post',
     data: props,
-    url: `${ROOT_URL}/reports`,
+    url: `/api/reports`,
     headers: {
       'token': `${tokenFromStorage}`
     }
@@ -94,7 +90,7 @@ export function updateReport(expense, token) {
   const request = axios({
     method: 'put',
     data: expense,
-    url: `${ROOT_URL}/reports/${expense._id}`,
+    url: `/api/reports/${expense._id}`,
     headers: {
       'token': `${token}`
     }
@@ -128,7 +124,7 @@ export function resetDeletedReport() {
 
 export function fetchReport(id, token) {
   const request = axios({
-    url: `${ROOT_URL}/reports/${id}`,
+    url: `/reports/${id}`,
     method: 'get',
     headers: { 'token': token }
   })
@@ -164,7 +160,7 @@ export function resetActiveReport() {
 export function deleteReport(id, token) {
   const request = axios({
     method: 'delete',
-    url: `${ROOT_URL}/reports/${id}`,
+    url: `/reports/${id}`,
     headers: {
       'token': `${token}`
     }

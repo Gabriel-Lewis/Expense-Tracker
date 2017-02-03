@@ -66,10 +66,23 @@
 	
 	var _reactRouter = __webpack_require__(333);
 	
+	var _session_actions = __webpack_require__(209);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var loadUserFromToken = function loadUserFromToken() {
+	  var token = localStorage.getItem('jwtToken');
+	  if (!token || token === '') {
+	    return;
+	  }
+	  _store2.default.dispatch((0, _session_actions.userFromToken)(token)).then(function (response) {
+	    _store2.default.dispatch((0, _session_actions.userFromTokenSuccess)(response.payload.data.user));
+	  });
+	};
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	  var main = document.getElementById('main');
+	  loadUserFromToken();
 	  _reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: _store2.default },
@@ -21582,9 +21595,9 @@
 	
 	var logger = (0, _reduxLogger2.default)();
 	
-	exports.default = (0, _redux.createStore)(_root_reducer2.default, {}, (0, _redux.applyMiddleware)(_reduxPromise2.default, logger));
+	var preloadedState = {};
 	
-	// export default configureStore;
+	exports.default = (0, _redux.createStore)(_root_reducer2.default, preloadedState, (0, _redux.applyMiddleware)(_reduxPromise2.default, logger));
 
 /***/ },
 /* 179 */
@@ -27836,7 +27849,6 @@
 	      return _extends({}, state, { loading: true });
 	      return state;
 	    case _expense_actions.FETCH_EXPENSES_SUCCESS:
-	      // return {...state, expensesList: {expenses: action.payload, error:null, loading: false} };
 	      return _extends({}, state, { expenses: action.payload, loading: false });
 	    case _expense_actions.FETCH_EXPENSES_ERRORS:
 	      error = action.payload || { message: action.payload.message };
@@ -27892,11 +27904,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// const INITIAL_STATE = {
-	// 						expensesList: {expenses: [], error:null, loading: false},
-	// 						newExpense: {expense:null, error: null, loading: false},
-	// 						deletedExpense: {expense: null, error:null, loading: false},
-	// 					};
 	var INITIAL_STATE = {
 	  expenses: [],
 	  activeExpense: null,
@@ -27964,12 +27971,10 @@
 	var DELETE_EXPENSE_FAILURE = exports.DELETE_EXPENSE_FAILURE = 'DELETE_EXPENSE_FAILURE';
 	var RESET_DELETED_EXPENSE = exports.RESET_DELETED_EXPENSE = 'RESET_DELETED_EXPENSE';
 	
-	var ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
-	
 	function fetchExpenses(token) {
 	  var request = (0, _axios2.default)({
 	    method: 'get',
-	    url: ROOT_URL + '/expenses',
+	    url: '/api/expenses',
 	    headers: {
 	      'token': '' + token
 	    }
@@ -27999,7 +28004,7 @@
 	  var request = (0, _axios2.default)({
 	    method: 'post',
 	    data: props,
-	    url: ROOT_URL + '/expenses',
+	    url: '/api/expenses',
 	    headers: {
 	      'token': '' + tokenFromStorage
 	    }
@@ -28029,7 +28034,7 @@
 	  var request = (0, _axios2.default)({
 	    method: 'put',
 	    data: expense,
-	    url: ROOT_URL + '/expenses/' + expense._id,
+	    url: '/api/expenses/' + expense._id,
 	    headers: {
 	      'token': '' + token
 	    }
@@ -28063,7 +28068,7 @@
 	
 	function fetchExpense(id, token) {
 	  var request = (0, _axios2.default)({
-	    url: ROOT_URL + '/expenses/' + id,
+	    url: '/api/expenses/' + id,
 	    method: 'get',
 	    headers: { 'token': token }
 	  });
@@ -28097,7 +28102,7 @@
 	function deleteExpense(id, token) {
 	  var request = (0, _axios2.default)({
 	    method: 'delete',
-	    url: ROOT_URL + '/expenses/' + id,
+	    url: '/api/expenses/' + id,
 	    headers: {
 	      'token': '' + token
 	    }
@@ -37717,12 +37722,10 @@
 	var DELETE_REPORT_FAILURE = exports.DELETE_REPORT_FAILURE = 'DELETE_REPORT_FAILURE';
 	var RESET_DELETED_REPORT = exports.RESET_DELETED_REPORT = 'RESET_DELETED_REPORT';
 	
-	var ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
-	
 	function fetchReports(token) {
 	  var request = (0, _axios2.default)({
 	    method: 'get',
-	    url: ROOT_URL + '/reports',
+	    url: '/api/reports',
 	    headers: {
 	      'token': '' + token
 	    }
@@ -37752,7 +37755,7 @@
 	  var request = (0, _axios2.default)({
 	    method: 'post',
 	    data: props,
-	    url: ROOT_URL + '/reports',
+	    url: '/api/reports',
 	    headers: {
 	      'token': '' + tokenFromStorage
 	    }
@@ -37782,7 +37785,7 @@
 	  var request = (0, _axios2.default)({
 	    method: 'put',
 	    data: expense,
-	    url: ROOT_URL + '/reports/' + expense._id,
+	    url: '/api/reports/' + expense._id,
 	    headers: {
 	      'token': '' + token
 	    }
@@ -37816,7 +37819,7 @@
 	
 	function fetchReport(id, token) {
 	  var request = (0, _axios2.default)({
-	    url: ROOT_URL + '/reports/' + id,
+	    url: '/reports/' + id,
 	    method: 'get',
 	    headers: { 'token': token }
 	  });
@@ -37850,7 +37853,7 @@
 	function deleteReport(id, token) {
 	  var request = (0, _axios2.default)({
 	    method: 'delete',
-	    url: ROOT_URL + '/reports/' + id,
+	    url: '/reports/' + id,
 	    headers: {
 	      'token': '' + token
 	    }
@@ -37881,6 +37884,10 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _extends = Object.assign || function (target) {
 	  for (var i = 1; i < arguments.length; i++) {
 	    var source = arguments[i];for (var key in source) {
@@ -37890,10 +37897,6 @@
 	    }
 	  }return target;
 	};
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
 	var _core = __webpack_require__(327);
 	
@@ -37927,17 +37930,17 @@
 	 * @returns {function} logger middleware
 	 */
 	function createLogger() {
-	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	
 	  var loggerOptions = _extends({}, _defaults2.default, options);
 	
-	  var logger = loggerOptions.logger;
-	  var transformer = loggerOptions.transformer;
-	  var stateTransformer = loggerOptions.stateTransformer;
-	  var errorTransformer = loggerOptions.errorTransformer;
-	  var predicate = loggerOptions.predicate;
-	  var logErrors = loggerOptions.logErrors;
-	  var diffPredicate = loggerOptions.diffPredicate;
+	  var logger = loggerOptions.logger,
+	      transformer = loggerOptions.transformer,
+	      stateTransformer = loggerOptions.stateTransformer,
+	      errorTransformer = loggerOptions.errorTransformer,
+	      predicate = loggerOptions.predicate,
+	      logErrors = loggerOptions.logErrors,
+	      diffPredicate = loggerOptions.diffPredicate;
 	
 	  // Return if 'console' object is not defined
 	
@@ -37974,7 +37977,7 @@
 	        logEntry.prevState = stateTransformer(getState());
 	        logEntry.action = action;
 	
-	        var returnedValue = undefined;
+	        var returnedValue = void 0;
 	        if (logErrors) {
 	          try {
 	            returnedValue = next(action);
@@ -38014,6 +38017,13 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
+	  return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+	} : function (obj) {
+	  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+	};
+	
 	exports.printBuffer = printBuffer;
 	
 	var _helpers = __webpack_require__(328);
@@ -38034,10 +38044,6 @@
 	  } else {
 	    return Array.from(arr);
 	  }
-	}
-	
-	function _typeof(obj) {
-	  return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj === 'undefined' ? 'undefined' : _typeof2(obj);
 	}
 	
 	/**
@@ -38062,40 +38068,38 @@
 	}
 	
 	function defaultTitleFormatter(options) {
-	  var timestamp = options.timestamp;
-	  var duration = options.duration;
+	  var timestamp = options.timestamp,
+	      duration = options.duration;
 	
 	  return function (action, time, took) {
 	    var parts = ['action'];
-	    if (timestamp) {
-	      parts.push('@ ' + time);
-	    }
-	    parts.push(action.type);
-	    if (duration) {
-	      parts.push('(in ' + took.toFixed(2) + ' ms)');
-	    }
+	
+	    if (timestamp) parts.push('@ ' + time);
+	    parts.push(String(action.type));
+	    if (duration) parts.push('(in ' + took.toFixed(2) + ' ms)');
+	
 	    return parts.join(' ');
 	  };
 	}
 	
 	function printBuffer(buffer, options) {
-	  var logger = options.logger;
-	  var actionTransformer = options.actionTransformer;
-	  var _options$titleFormatt = options.titleFormatter;
-	  var titleFormatter = _options$titleFormatt === undefined ? defaultTitleFormatter(options) : _options$titleFormatt;
-	  var collapsed = options.collapsed;
-	  var colors = options.colors;
-	  var level = options.level;
-	  var diff = options.diff;
+	  var logger = options.logger,
+	      actionTransformer = options.actionTransformer,
+	      _options$titleFormatt = options.titleFormatter,
+	      titleFormatter = _options$titleFormatt === undefined ? defaultTitleFormatter(options) : _options$titleFormatt,
+	      collapsed = options.collapsed,
+	      colors = options.colors,
+	      level = options.level,
+	      diff = options.diff;
 	
 	  buffer.forEach(function (logEntry, key) {
-	    var started = logEntry.started;
-	    var startedTime = logEntry.startedTime;
-	    var action = logEntry.action;
-	    var prevState = logEntry.prevState;
-	    var error = logEntry.error;
-	    var took = logEntry.took;
-	    var nextState = logEntry.nextState;
+	    var started = logEntry.started,
+	        startedTime = logEntry.startedTime,
+	        action = logEntry.action,
+	        prevState = logEntry.prevState,
+	        error = logEntry.error;
+	    var took = logEntry.took,
+	        nextState = logEntry.nextState;
 	
 	    var nextEntry = buffer[key + 1];
 	
@@ -38108,7 +38112,7 @@
 	    var formattedAction = actionTransformer(action);
 	    var isCollapsed = typeof collapsed === 'function' ? collapsed(function () {
 	      return nextState;
-	    }, action) : collapsed;
+	    }, action, logEntry) : collapsed;
 	
 	    var formattedTime = (0, _helpers.formatTime)(startedTime);
 	    var titleCSS = colors.title ? 'color: ' + colors.title(formattedAction) + ';' : null;
@@ -38153,7 +38157,7 @@
 	    try {
 	      logger.groupEnd();
 	    } catch (e) {
-	      logger.log('—— log end ——');
+	      logger.log("\u2014\u2014 log end \u2014\u2014");
 	    }
 	  });
 	}
@@ -38201,6 +38205,16 @@
 	  return obj && obj.__esModule ? obj : { default: obj };
 	}
 	
+	function _toConsumableArray(arr) {
+	  if (Array.isArray(arr)) {
+	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	      arr2[i] = arr[i];
+	    }return arr2;
+	  } else {
+	    return Array.from(arr);
+	  }
+	}
+	
 	// https://github.com/flitbit/diff#differences
 	var dictionary = {
 	  'E': {
@@ -38226,24 +38240,24 @@
 	}
 	
 	function render(diff) {
-	  var kind = diff.kind;
-	  var path = diff.path;
-	  var lhs = diff.lhs;
-	  var rhs = diff.rhs;
-	  var index = diff.index;
-	  var item = diff.item;
+	  var kind = diff.kind,
+	      path = diff.path,
+	      lhs = diff.lhs,
+	      rhs = diff.rhs,
+	      index = diff.index,
+	      item = diff.item;
 	
 	  switch (kind) {
 	    case 'E':
-	      return path.join('.') + ' ' + lhs + ' → ' + rhs;
+	      return [path.join('.'), lhs, '\u2192', rhs];
 	    case 'N':
-	      return path.join('.') + ' ' + rhs;
+	      return [path.join('.'), rhs];
 	    case 'D':
-	      return '' + path.join('.');
+	      return [path.join('.')];
 	    case 'A':
 	      return [path.join('.') + '[' + index + ']', item];
 	    default:
-	      return null;
+	      return [];
 	  }
 	}
 	
@@ -38266,16 +38280,16 @@
 	
 	      var output = render(elem);
 	
-	      logger.log('%c ' + dictionary[kind].text, style(kind), output);
+	      logger.log.apply(logger, ['%c ' + dictionary[kind].text, style(kind)].concat(_toConsumableArray(output)));
 	    });
 	  } else {
-	    logger.log('—— no diff ——');
+	    logger.log('\u2014\u2014 no diff \u2014\u2014');
 	  }
 	
 	  try {
 	    logger.groupEnd();
 	  } catch (e) {
-	    logger.log('—— diff end —— ');
+	    logger.log('\u2014\u2014 diff end \u2014\u2014 ');
 	  }
 	}
 	module.exports = exports['default'];
@@ -38768,7 +38782,7 @@
 	  // Deprecated options
 	  transformer: undefined
 	};
-	module.exports = exports['default'];
+	module.exports = exports["default"];
 
 /***/ },
 /* 332 */
@@ -38779,7 +38793,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.onEnterFetchReport = exports.onEnterFetchExpense = undefined;
+	exports.redirectIfLoggedIn = exports.ensureLoggedIn = exports.onEnterFetchReport = exports.onEnterFetchExpense = undefined;
 	
 	var _react = __webpack_require__(1);
 	
@@ -38803,9 +38817,9 @@
 	
 	var _report_form_container2 = _interopRequireDefault(_report_form_container);
 	
-	var _front_page = __webpack_require__(411);
+	var _front_page_container = __webpack_require__(411);
 	
-	var _front_page2 = _interopRequireDefault(_front_page);
+	var _front_page_container2 = _interopRequireDefault(_front_page_container);
 	
 	var _expense_actions = __webpack_require__(321);
 	
@@ -38829,10 +38843,26 @@
 	  });
 	};
 	
+	var ensureLoggedIn = exports.ensureLoggedIn = function ensureLoggedIn(nextState, replace) {
+	  // console.log(store.getState());
+	  var token = localStorage.getItem('jwtToken');
+	  console.log(token);
+	  // if (!token) {
+	  //   replace('/login');
+	  // }
+	};
+	
+	var redirectIfLoggedIn = exports.redirectIfLoggedIn = function redirectIfLoggedIn(nextState, replace) {
+	  var currentUser = _store2.default.getState().session.user;
+	  if (currentUser) {
+	    replace('/');
+	  }
+	};
+	
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _root_container2.default },
-	  _react2.default.createElement(_reactRouter.IndexRoute, { components: _front_page2.default }),
+	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _front_page_container2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _session_form_container2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _session_form_container2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/new-expense', component: _new_expense_container2.default }),
@@ -45337,11 +45367,6 @@
 	  }
 	
 	  _createClass(App, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.props.loadUserFromToken();
-	    }
-	  }, {
 	    key: 'sessionLinks',
 	    value: function sessionLinks() {
 	      if (this.props.currentUser === null) {
@@ -45349,15 +45374,31 @@
 	          'nav',
 	          { className: 'login-signup' },
 	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/login', activeClassName: 'current' },
-	            'Login'
+	            'div',
+	            { className: 'logo' },
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/' },
+	              _react2.default.createElement(
+	                'h3',
+	                null,
+	                'Expense Tracker'
+	              )
+	            )
 	          ),
-	          '\xA0or\xA0',
 	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/signup', activeClassName: 'current' },
-	            'Sign up!'
+	            'div',
+	            { className: 'links' },
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/login', activeClassName: 'current' },
+	              'Login'
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/signup', activeClassName: 'current' },
+	              'Sign up!'
+	            )
 	          )
 	        );
 	      } else {
@@ -45365,21 +45406,38 @@
 	          'nav',
 	          null,
 	          _react2.default.createElement(
-	            'button',
-	            {
-	              onClick: this.props.resetUser
-	            },
-	            'Logout'
+	            'div',
+	            { className: 'logo' },
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/' },
+	              _react2.default.createElement(
+	                'h3',
+	                null,
+	                'Expense Tracker'
+	              )
+	            )
 	          ),
 	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/new-expense' },
-	            'New Expense'
-	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/new-report' },
-	            'New Report'
+	            'div',
+	            { className: 'links' },
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/new-expense' },
+	              'New Expense'
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/new-report' },
+	              'New Report'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              {
+	                onClick: this.props.resetUser
+	              },
+	              'Logout'
+	            )
 	          )
 	        );
 	      }
@@ -45672,7 +45730,8 @@
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
-	  var location = _ref2.location;
+	  var location = _ref2.location,
+	      router = _ref2.router;
 	
 	  var isEditting = location.pathname.includes('edit');
 	  var token = localStorage.getItem('jwtToken');
@@ -45681,16 +45740,19 @@
 	    createExpense: function createExpense(expense) {
 	      dispatch((0, _expense_actions.createExpense)(expense, token)).then(function (response) {
 	        dispatch((0, _expense_actions.createExpenseSuccess)(response.data));
+	        router.push("/");
 	      });
 	    },
 	    updateExpense: function updateExpense(expense) {
 	      dispatch((0, _expense_actions.updateExpense)(expense, token)).then(function (response) {
 	        dispatch((0, _expense_actions.updateExpenseSuccess)(response.payload.data.expense));
+	        router.push("/");
 	      });
 	    },
 	    deleteExpense: function deleteExpense(id) {
 	      dispatch((0, _expense_actions.deleteExpense)(id, token)).then(function (response) {
 	        dispatch((0, _expense_actions.deleteExpenseSuccess)());
+	        router.push("/");
 	      });
 	    },
 	    isEditting: isEditting
@@ -45816,6 +45878,7 @@
 	          "label",
 	          null,
 	          "Description",
+	          _react2.default.createElement("br", null),
 	          _react2.default.createElement("input", {
 	            type: "text",
 	            value: this.state.description,
@@ -45826,6 +45889,7 @@
 	          "label",
 	          null,
 	          "Date",
+	          _react2.default.createElement("br", null),
 	          _react2.default.createElement("input", {
 	            value: this.state.transactionDate,
 	            type: "text",
@@ -45836,6 +45900,7 @@
 	          "label",
 	          null,
 	          "Amount",
+	          _react2.default.createElement("br", null),
 	          _react2.default.createElement("input", {
 	            type: "text",
 	            value: this.state.amount,
@@ -45892,7 +45957,8 @@
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
-	  var location = _ref2.location;
+	  var location = _ref2.location,
+	      router = _ref2.router;
 	
 	  var isEditting = location.pathname.includes('edit');
 	  var token = localStorage.getItem('jwtToken');
@@ -45900,17 +45966,20 @@
 	  return {
 	    createReport: function createReport(report) {
 	      dispatch((0, _report_actions.createReport)(report, token)).then(function (response) {
-	        dispatch((0, _report_actions.createReportSuccess)(response.data.report));
+	        dispatch((0, _report_actions.createReportSuccess)(response.data));
+	        router.push('/');
 	      });
 	    },
 	    updateReport: function updateReport(report) {
 	      dispatch((0, _report_actions.updateReport)(report, token)).then(function (response) {
-	        dispatch((0, _report_actions.updateReportSuccess)(response.payload.data.report));
+	        dispatch((0, _report_actions.updateReportSuccess)(response.data));
+	        router.push('/');
 	      });
 	    },
 	    deleteReport: function deleteReport(reportId) {
 	      dispatch((0, _report_actions.deleteReport)(reportId, token)).then(function (response) {
 	        dispatch((0, _report_actions.deleteReportSuccess)());
+	        router.push('/');
 	      });
 	    },
 	    isEditting: isEditting
@@ -46025,6 +46094,7 @@
 	          "label",
 	          null,
 	          "Start Date",
+	          _react2.default.createElement("br", null),
 	          _react2.default.createElement("input", {
 	            type: "text",
 	            value: this.state.startDate,
@@ -46035,12 +46105,14 @@
 	          "label",
 	          null,
 	          "End Date",
+	          _react2.default.createElement("br", null),
 	          _react2.default.createElement("input", {
 	            type: "text",
 	            value: this.state.endDate,
 	            onChange: this.update("endDate")
 	          })
 	        ),
+	        _react2.default.createElement("br", null),
 	        _react2.default.createElement(
 	          "button",
 	          {
@@ -46072,41 +46144,94 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(389);
+	
+	var _front_page = __webpack_require__(412);
+	
+	var _front_page2 = _interopRequireDefault(_front_page);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(props) {
+	  return {
+	    currentUser: props.session.user
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_front_page2.default);
+
+/***/ },
+/* 412 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	var _reactRouter = __webpack_require__(333);
 	
-	var _expense_index_container = __webpack_require__(412);
+	var _expense_index_container = __webpack_require__(413);
 	
 	var _expense_index_container2 = _interopRequireDefault(_expense_index_container);
 	
-	var _report_index_container = __webpack_require__(415);
+	var _report_index_container = __webpack_require__(416);
 	
 	var _report_index_container2 = _interopRequireDefault(_report_index_container);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Frontpage = function Frontpage() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Expenses'
-	    ),
-	    _react2.default.createElement(_expense_index_container2.default, null),
-	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'Reports'
-	    ),
-	    _react2.default.createElement(_report_index_container2.default, null)
-	  );
-	};
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Frontpage = function (_React$Component) {
+	  _inherits(Frontpage, _React$Component);
+	
+	  function Frontpage(props) {
+	    _classCallCheck(this, Frontpage);
+	
+	    return _possibleConstructorReturn(this, (Frontpage.__proto__ || Object.getPrototypeOf(Frontpage)).call(this, props));
+	  }
+	
+	  _createClass(Frontpage, [{
+	    key: 'render',
+	    value: function render() {
+	      if (this.props.currentUser) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(_expense_index_container2.default, null),
+	          _react2.default.createElement(_report_index_container2.default, null)
+	        );
+	      } else {
+	        return _react2.default.createElement('div', null);
+	      }
+	    }
+	  }]);
+	
+	  return Frontpage;
+	}(_react2.default.Component);
+	
+	;
 	
 	exports.default = Frontpage;
 
 /***/ },
-/* 412 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46123,7 +46248,7 @@
 	
 	var _expense_actions = __webpack_require__(321);
 	
-	var _expense_index = __webpack_require__(413);
+	var _expense_index = __webpack_require__(414);
 	
 	var _expense_index2 = _interopRequireDefault(_expense_index);
 	
@@ -46154,7 +46279,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_expense_index2.default);
 
 /***/ },
-/* 413 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46169,7 +46294,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _expense_item = __webpack_require__(414);
+	var _expense_item = __webpack_require__(415);
 	
 	var _expense_item2 = _interopRequireDefault(_expense_item);
 	
@@ -46206,6 +46331,11 @@
 	        'div',
 	        { className: 'expense-index' },
 	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Expenses'
+	        ),
+	        _react2.default.createElement(
 	          'ul',
 	          null,
 	          this.props.expenses.map(function (expense) {
@@ -46229,7 +46359,7 @@
 	exports.default = ExpenseIndex;
 
 /***/ },
-/* 414 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46257,7 +46387,7 @@
 	    'li',
 	    { className: 'expense-item' },
 	    _react2.default.createElement(
-	      'p',
+	      'h4',
 	      null,
 	      description
 	    ),
@@ -46290,7 +46420,7 @@
 	exports.default = (0, _reactRouter.withRouter)(ExpenseItem);
 
 /***/ },
-/* 415 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46307,7 +46437,7 @@
 	
 	var _report_actions = __webpack_require__(325);
 	
-	var _report_index = __webpack_require__(416);
+	var _report_index = __webpack_require__(417);
 	
 	var _report_index2 = _interopRequireDefault(_report_index);
 	
@@ -46338,7 +46468,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_report_index2.default);
 
 /***/ },
-/* 416 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46353,7 +46483,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _report_item = __webpack_require__(417);
+	var _report_item = __webpack_require__(418);
 	
 	var _report_item2 = _interopRequireDefault(_report_item);
 	
@@ -46386,6 +46516,11 @@
 	                'div',
 	                { className: 'report-index' },
 	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Reports'
+	                ),
+	                _react2.default.createElement(
 	                    'ul',
 	                    null,
 	                    this.props.reports.map(function (report) {
@@ -46409,7 +46544,7 @@
 	exports.default = ReportIndex;
 
 /***/ },
-/* 417 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46424,7 +46559,7 @@
 	
 	var _reactRouter = __webpack_require__(333);
 	
-	var _expense_item = __webpack_require__(414);
+	var _expense_item = __webpack_require__(415);
 	
 	var _expense_item2 = _interopRequireDefault(_expense_item);
 	

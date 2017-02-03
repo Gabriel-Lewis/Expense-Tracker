@@ -25,13 +25,10 @@ export const DELETE_EXPENSE_FAILURE = 'DELETE_EXPENSE_FAILURE';
 export const RESET_DELETED_EXPENSE = 'RESET_DELETED_EXPENSE';
 
 
-
-const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
-
 export function fetchExpenses(token) {
   const request = axios({
     method: 'get',
-    url: `${ROOT_URL}/expenses`,
+    url: `/api/expenses`,
     headers: {
     'token': `${token}`
   }
@@ -62,7 +59,7 @@ export function createExpense(props, tokenFromStorage) {
   const request = axios({
     method: 'post',
     data: props,
-    url: `${ROOT_URL}/expenses`,
+    url: `/api/expenses`,
     headers: {
       'token': `${tokenFromStorage}`
     }
@@ -92,7 +89,7 @@ export function updateExpense(expense, token) {
   const request = axios({
     method: 'put',
     data: expense,
-    url: `${ROOT_URL}/expenses/${expense._id}`,
+    url: `/api/expenses/${expense._id}`,
     headers: {
       'token': `${token}`
     }
@@ -126,7 +123,7 @@ export function resetDeletedExpense() {
 
 export function fetchExpense(id, token) {
   const request = axios({
-    url: `${ROOT_URL}/expenses/${id}`,
+    url: `/api/expenses/${id}`,
     method: 'get',
     headers: { 'token': token }
   })
@@ -162,7 +159,7 @@ export function resetActiveExpense() {
 export function deleteExpense(id, token) {
   const request = axios({
     method: 'delete',
-    url: `${ROOT_URL}/expenses/${id}`,
+    url: `/api/expenses/${id}`,
     headers: {
       'token': `${token}`
     }

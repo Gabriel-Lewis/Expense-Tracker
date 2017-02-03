@@ -14,7 +14,7 @@ const mapStateToProps = ({report}) => ({
   activeReport: report.activeReport
 })
 
-const mapDispatchToProps = (dispatch, {location}) => {
+const mapDispatchToProps = (dispatch, {location, router}) => {
   let isEditting = location.pathname.includes('edit')
   let token = localStorage.getItem('jwtToken');
 
@@ -22,19 +22,22 @@ const mapDispatchToProps = (dispatch, {location}) => {
   createReport: (report) => {
     dispatch(createReport(report, token))
     .then((response) => {
-      dispatch(createReportSuccess(response.data.report))
+      dispatch(createReportSuccess(response.data))
+      router.push('/')
     })
   },
   updateReport: (report) => {
     dispatch(updateReport(report, token))
       .then((response) => {
-        dispatch(updateReportSuccess(response.payload.data.report))
+        dispatch(updateReportSuccess(response.data))
+        router.push('/')
       })
     },
     deleteReport: (reportId) => {
       dispatch(deleteReport(reportId, token))
       .then((response) => {
         dispatch(deleteReportSuccess())
+        router.push('/')
       })
     },
     isEditting

@@ -4,7 +4,7 @@ import {Link, withRouter} from 'react-router';
 const ExpenseItem = ({date, amount, email, description, id}) => {
   return (
     <li className='expense-item'>
-      <p>{description}</p>
+      <h4>{description}</h4>
       <p>date: {date}</p>
       <p>amount: {(amount/100).toFixed(2)}</p>
       <p>owner-email: {email}</p>

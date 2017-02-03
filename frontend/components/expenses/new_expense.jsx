@@ -28,7 +28,6 @@ export default class NewExpense extends Component {
       transactionDate: newProps.activeExpense.transactionDate,
       _id: newProps.activeExpense._id
     });
-
   }
 
   deleteButton() {
@@ -74,17 +73,23 @@ export default class NewExpense extends Component {
         return (
 
             <div className="new-expense-form">
-              <label>Description<input
+              <label>Description
+              <br/>
+                <input
                 type='text'
                 value={this.state.description}
                 onChange={this.update("description")}
                 /></label>
-              <label>Date<input
+              <label>Date
+                <br/>
+                <input
                 value={this.state.transactionDate}
                 type='text'
                 onChange={this.update('transactionDate')}
                 /></label>
-              <label>Amount<input
+              <label>Amount
+                <br/>
+                <input
                 type="text"
                 value={this.state.amount}
                 onBlur={this.updateCurrency}

@@ -14,7 +14,7 @@ const mapStateToProps = ({expense}) => ({
   activeExpense: expense.activeExpense
 })
 
-const mapDispatchToProps = (dispatch, {location}) => {
+const mapDispatchToProps = (dispatch, {location, router}) => {
   let isEditting = location.pathname.includes('edit')
   let token = localStorage.getItem('jwtToken');
 
@@ -23,18 +23,21 @@ const mapDispatchToProps = (dispatch, {location}) => {
     dispatch(createExpense(expense, token))
     .then((response) => {
       dispatch(createExpenseSuccess(response.data))
+      router.push("/")
     })
   },
   updateExpense: (expense) => {
     dispatch(updateExpense(expense, token))
       .then((response) => {
         dispatch(updateExpenseSuccess(response.payload.data.expense))
+        router.push("/")
       })
     },
     deleteExpense: (id) => {
       dispatch(deleteExpense(id, token))
       .then((response) => {
         dispatch(deleteExpenseSuccess())
+        router.push("/")
       })
     },
     isEditting

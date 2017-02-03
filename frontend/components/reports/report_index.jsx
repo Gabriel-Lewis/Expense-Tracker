@@ -14,6 +14,7 @@ export default class ReportIndex extends Component {
     render() {
         return (
             <div className="report-index">
+              <h3>Reports</h3>
               <ul>
                 {
                   this.props.reports.map(report => (

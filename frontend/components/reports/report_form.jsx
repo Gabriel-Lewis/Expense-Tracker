@@ -60,16 +60,21 @@ export default class NewReport extends Component {
         return (
 
             <div className="new-report-form">
-              <label>Start Date<input
+              <label>Start Date
+                <br/>
+                <input
                 type='text'
                 value={this.state.startDate}
                 onChange={this.update("startDate")}
                 /></label>
-              <label>End Date<input
+              <label>End Date
+                <br/>
+                <input
                 type="text"
                 value={this.state.endDate}
                 onChange={this.update("endDate")}
                 /></label>
+              <br/>
               <button
                 onClick={this.handleSubmit}
                 >Submit</button>

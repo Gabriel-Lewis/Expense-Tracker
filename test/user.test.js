@@ -42,7 +42,6 @@ describe("POST /users", () => {
       .send({email, password, admin})
       .expect(200)
       .expect((res) => {
-        // expect(res.headers['token']).toExist();
         expect(res.body.user._id).toExist();
         expect(res.body.user.email).toBe(email);
       })
@@ -85,7 +84,6 @@ describe("POST /users", () => {
       .send({email, password, admin})
       .expect(400)
       .expect((res) => {
-        // expect(res.headers['x-auth']).toNotExist();
         expect(res.body._id).toNotExist();
       })
       .end(done)
@@ -113,8 +111,7 @@ describe("POST /api/session", () => {
 
         User.findById(users[1]._id).then((user) => {
           expect(user.tokens[1]).toInclude({
-            access: 'auth',
-            // token: res.headers['x-auth']
+            access: 'auth'
           })
           done();
         }).catch((e) => (done(e)));
@@ -131,7 +128,6 @@ describe("POST /api/session", () => {
       .send({email, password})
       .expect(400)
       .expect((res) => {
-        // expect(res.headers['x-auth']).toNotExist();
       })
       .end((err, res) => {
         if (err) {

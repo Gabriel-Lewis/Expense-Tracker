@@ -5,11 +5,10 @@ import createLogger from 'redux-logger';
 
 const logger = createLogger();
 
+const preloadedState = {}
 
 export default createStore(
     rootReducer,
-    {},
+    preloadedState,
     applyMiddleware(promise, logger)
 )
-
-// export default configureStore;
