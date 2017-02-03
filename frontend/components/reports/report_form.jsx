@@ -1,28 +1,29 @@
 import React,{Component} from 'react';
-// import Calendar from 'rc-calendar';
-// import moment from 'moment';
-// import DatePicker from 'rc-calendar/lib/Picker'
-// import 'rc-calendar/assets/index.css'
-// import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import DatePicker from 'react-datepicker'
 
 export default class NewReport extends Component {
   constructor(props){
       super(props);
       this.state = {
-        startDate: "",
-        endDate: 0,
-        transactionDate: ""
+        startDate: moment(),
+        endDate: moment()
       };
 
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleStartDateChange = this.handleStartDateChange.bind(this)
+    this.handleEndDateChange = this.handleEndDateChange.bind(this)
   }
 
   componentWillReceiveProps(newProps) {
+    let startDate = moment(newProps.activeReport.startDate)
+    let endDate = moment(newProps.activeReport.endDate)
+
     this.setState({
-      startDate: newProps.activeReport.startDate,
-      endDate: newProps.activeReport.endDate,
+      startDate: startDate,
+      endDate: endDate,
       _id: newProps.activeReport._id
     });
 
@@ -56,24 +57,37 @@ export default class NewReport extends Component {
       });
     }
 
+    handleStartDateChange(date) {
+      this.setState({
+        startDate: date
+      });
+    }
+
+    handleEndDateChange(date) {
+      this.setState({
+        endDate: date
+      });
+    }
+
     render() {
         return (
 
             <div className="new-report-form">
+
               <label>Start Date
                 <br/>
-                <input
-                type='text'
-                value={this.state.startDate}
-                onChange={this.update("startDate")}
-                /></label>
+                  <DatePicker
+                    name='startDate'
+                    selected={this.state.startDate}
+                    onChange={this.handleStartDateChange}
+                    /></label>
               <label>End Date
                 <br/>
-                <input
-                type="text"
-                value={this.state.endDate}
-                onChange={this.update("endDate")}
-                /></label>
+                  <DatePicker
+                    name='endDate'
+                    selected={this.state.endDate}
+                    onChange={this.handleEndDateChange}
+                    /></label>
               <br/>
               <button
                 onClick={this.handleSubmit}

@@ -1,9 +1,6 @@
 import React,{Component} from 'react';
-// import Calendar from 'rc-calendar';
-// import moment from 'moment';
-// import DatePicker from 'rc-calendar/lib/Picker'
-// import 'rc-calendar/assets/index.css'
-// import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import DatePicker from 'react-datepicker'
 
 export default class NewExpense extends Component {
   constructor(props){
@@ -11,21 +8,23 @@ export default class NewExpense extends Component {
       this.state = {
         description: "",
         amount: 0.00,
-        transactionDate: ""
+        transactionDate: moment()
       };
 
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.updateCurrency = this.updateCurrency.bind(this);
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentWillReceiveProps(newProps) {
+    let date = moment(newProps.activeExpense.transactionDate)
     let amount = (newProps.activeExpense.amount / 100).toFixed(2)
     this.setState({
       description: newProps.activeExpense.description,
       amount: amount,
-      transactionDate: newProps.activeExpense.transactionDate,
+      transactionDate: date,
       _id: newProps.activeExpense._id
     });
   }
@@ -69,6 +68,12 @@ export default class NewExpense extends Component {
       });
     }
 
+    handleChange(date) {
+    this.setState({
+      transactionDate: date
+    });
+  }
+
     render() {
         return (
 
@@ -82,11 +87,10 @@ export default class NewExpense extends Component {
                 /></label>
               <label>Date
                 <br/>
-                <input
-                value={this.state.transactionDate}
-                type='text'
-                onChange={this.update('transactionDate')}
-                /></label>
+                  <DatePicker
+                    selected={this.state.transactionDate}
+                    onChange={this.handleChange}
+                    /></label>
               <label>Amount
                 <br/>
                 <input
