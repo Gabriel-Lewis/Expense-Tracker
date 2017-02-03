@@ -46383,6 +46383,7 @@
 	      description = _ref.description,
 	      id = _ref.id;
 	
+	  var dateString = new Date(date).toDateString();
 	  return _react2.default.createElement(
 	    'li',
 	    { className: 'expense-item' },
@@ -46394,8 +46395,7 @@
 	    _react2.default.createElement(
 	      'p',
 	      null,
-	      'date: ',
-	      date
+	      dateString
 	    ),
 	    _react2.default.createElement(
 	      'p',
@@ -46572,6 +46572,8 @@
 	      id = _ref.id,
 	      totalSpent = _ref.totalSpent;
 	
+	  var startDateString = new Date(startDate).toDateString();
+	  var endDateString = new Date(endDate).toDateString();
 	  return _react2.default.createElement(
 	    'li',
 	    { className: 'report-item' },
@@ -46579,13 +46581,13 @@
 	      'p',
 	      null,
 	      'Start Date: ',
-	      startDate
+	      startDateString
 	    ),
 	    _react2.default.createElement(
 	      'p',
 	      null,
 	      'End Date: ',
-	      endDate
+	      endDateString
 	    ),
 	    _react2.default.createElement(
 	      'p',
@@ -46602,7 +46604,6 @@
 	          description: expense.description,
 	          date: expense.transactionDate,
 	          amount: expense.amount,
-	          email: expense.author.email,
 	          id: expense._id
 	        });
 	      })
@@ -46611,8 +46612,6 @@
 	};
 	
 	exports.default = ReportItem;
-	
-	//   />
 
 /***/ }
 /******/ ]);

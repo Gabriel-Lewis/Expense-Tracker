@@ -4,10 +4,12 @@ import {Link, withRouter} from 'react-router';
 import ExpenseItem from '../expenses/expense_item';
 
 const ReportItem = ({startDate,endDate, expenses, id, totalSpent}) => {
+  let startDateString = new Date(startDate).toDateString()
+  let endDateString = new Date(endDate).toDateString()
   return (
     <li className='report-item'>
-      <p>Start Date: {startDate}</p>
-      <p>End Date: {endDate}</p>
+      <p>Start Date: {startDateString}</p>
+      <p>End Date: {endDateString}</p>
       <p>Total Spent: {(totalSpent/100).toFixed(2)}</p>
       <ul>
         {expenses.map(expense => (
@@ -16,7 +18,6 @@ const ReportItem = ({startDate,endDate, expenses, id, totalSpent}) => {
             description={expense.description}
             date={expense.transactionDate}
             amount={expense.amount}
-            email={expense.author.email}
             id={expense._id}
             />
         ))}
@@ -26,5 +27,3 @@ const ReportItem = ({startDate,endDate, expenses, id, totalSpent}) => {
 }
 
 export default ReportItem;
-
-//   />
