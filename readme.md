@@ -23,11 +23,9 @@ or Run Auto Updating Tests with:
   npm run test-watch
 ```
 
-### API Routes
+## Routes
 
-The Backend has api routes for creating users, expenses, and reports.
-
-### Root
+## Root
 
 - `GET /` - loads React web app
 
