@@ -34,18 +34,20 @@ const read = (req, res) => {
 const readAll = (req, res) => {
   if (req.user.admin) {
     Expense.find({}).populate('author').then((expenses) => {
+      return res.send({expenses})
+    }, (e) => {
+      res.status(400).send(e)
+    })
+  } else {
+    Expense.find({
+      author: req.user._id
+    }).populate('author').then((expenses) => {
       res.send({expenses})
     }, (e) => {
       res.status(400).send(e)
     })
   }
-  Expense.find({
-    author: req.user._id
-  }).populate('author').then((expenses) => {
-    res.send({expenses})
-  }, (e) => {
-    res.status(400).send(e)
-  })
+
 }
 
 const update = (req, res) => {
