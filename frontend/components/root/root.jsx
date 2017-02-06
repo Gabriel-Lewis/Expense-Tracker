@@ -27,6 +27,7 @@ export default class App extends Component {
 						<Link to='/new-expense'>New Expense</Link>
 						<Link to='/new-report'>New Report</Link>
 	        <button
+            className='logout-button'
 	          onClick={this.props.resetUser}
 	          >Logout</button>
 				</div>

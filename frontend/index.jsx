@@ -14,7 +14,7 @@ const loadUserFromToken = () => {
    }
    store.dispatch(userFromToken(token))
      .then((response) => {
-       store.dispatch(userFromTokenSuccess(response.payload.data.user))
+       store.dispatch(userFromTokenSuccess(response.payload))
    })
  }
 
@@ -25,5 +25,4 @@ document.addEventListener('DOMContentLoaded', () => {
       <Provider store={store}>
         <Router history={browserHistory} routes={routes} />
       </Provider>, main);
-      window.store = store
 });

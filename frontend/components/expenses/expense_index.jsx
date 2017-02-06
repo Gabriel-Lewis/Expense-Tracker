@@ -7,10 +7,8 @@ export default class ExpenseIndex extends Component {
         super(props);
     }
 
-    componentDidMount() {
-      if (this.props.fetchExpenses) {
+    componentWillMount() {
         this.props.fetchExpenses()
-      }
     }
 
     render() {

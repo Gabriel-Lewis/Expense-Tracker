@@ -1,5 +1,6 @@
-body {
-  width: 100%
+body, html {
+  width: 100%;
+  height: 100%;
 }
 
 nav {
@@ -7,10 +8,16 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  height: 50px;
 }
 
-h1, h2, h3, h4, p, a, button, label, input {
+
+body, html, h1, h2, h3, h4, p, a, label, input, form, div {
   font-family: avenir;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 ul, li {
@@ -22,11 +29,29 @@ ul, li {
   text-align:left;
 }
 
+label {
+  margin: 10px;
+}
+
+a, button.logout-button {
+  font-size: 15px;
+  margin: 0;
+  text-decoration: none;
+  background:transparent;
+  color: black;
+  font-weight: bold;
+}
+
 .container {
+  position: absolute;
+  margin-top: 50px;
   display: flex;
   justify-content: space-around;
   width: 100%;
-  align-self: baseline;
+}
+
+.expense-index, .report-index {
+  width: 40%
 }
 
 .report-item {
@@ -45,9 +70,11 @@ ul, li {
   margin-right: 10px;
 }
 
-a:hover {
+a:hover, button.logout-button:hover {
+  background:transparent;
   text-decoration: underline;
 }
+
 .new-expense-form, .new-report-form {
   width: 100%;
   display: flex;
@@ -56,15 +83,63 @@ a:hover {
   align-items: center;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
+.login-form-container {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 75%;
+  align-items: center;
+  justify-content: center
+}
+
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
 }
 
 label {
-  margin: 10px;
+  margin: 0;
+  margin-top: 10px;
+  height: 50px;
+  width: 200px;
 }
+
+input {
+  width: 100%;
+  font-size: 14px;
+  border-bottom: 2px solid black;
+}
+
+input.login-button, button {
+  margin-top: 20px;
+  background: #3EBB47;
+  font-weight: bold;
+  color: white;
+  border: none;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.login-button:hover, button:hover {
+  cursor: pointer;
+  background: #3CB44E;
+}
+
+.report-index h3, .expense-index h3 {
+  text-align: center;
+}
+
+
+
 
 .react-datepicker__tether-element-attached-top .react-datepicker__triangle, .react-datepicker__tether-element-attached-bottom .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow {

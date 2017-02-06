@@ -54,7 +54,9 @@ class SessionForm extends React.Component {
 			return (<div></div>)
 		} else {
 			return (
-				<label>Admin:<input
+				<label>Admin
+					<br />
+					<input
 					type="checkbox"
 					checked={this.state.admin}
 					onChange={this.handleInputChange} /></label>
@@ -78,28 +80,25 @@ class SessionForm extends React.Component {
 		return (
 			<div className="login-form-container">
 				<form onSubmit={this.handleSubmit} className="login-form-box">
-					Welcome to Expense Tracker!
+					<p>Welcome to Expense Tracker!
 					<br/>
-					Please {this.props.formType} or {this.navLink()}
+					Please {this.props.formType} or {this.navLink()}</p>
 					<div className="login-form">
-						<br/>
-						<label> Email:
+						<label> Email
+							<br />
 							<input type="text"
 								value={this.state.email}
 								onChange={this.update("email")}
 								className="login-input" />
 						</label>
-						<br/>
-						<label> Password:
+						<label> Password
 							<input type="password"
 								value={this.state.password}
 								onChange={this.update("password")}
 								className="login-input" />
 						</label>
-						<br />
 						{this.adminBox()}
-						<br/>
-						<input type="submit" value="Submit" />
+						<input className='login-button' type="submit" value="Submit" />
 					</div>
 				</form>
 			</div>

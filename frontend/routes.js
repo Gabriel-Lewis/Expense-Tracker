@@ -23,12 +23,7 @@ export const onEnterFetchReport = (nextState) => {
 }
 
 export const ensureLoggedIn = (nextState, replace) => {
-    // console.log(store.getState());
     let token = localStorage.getItem('jwtToken');
-    console.log(token);
-    // if (!token) {
-    //   replace('/login');
-    // }
   };
 
 export const redirectIfLoggedIn = (nextState, replace) => {
@@ -47,6 +42,5 @@ export default (
     <Route path="/expenses/:expenseId/edit" component={NewExpenseContainer} onEnter={onEnterFetchExpense} />
     <Route path='/new-report' component={ ReportFormContainer } />
     <Route path="/reports/:reportId/edit" component={ReportFormContainer} onEnter={onEnterFetchReport} />
-
   </Route>
 );
