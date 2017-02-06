@@ -1,8 +1,12 @@
 const path = require('path');
 
 module.exports = {
+  context: __dirname,
   entry: './frontend/index.jsx',
-  output: {filename: './static/js/bundle.js'},
+  output: {
+    path: './static/js',
+    filename: 'bundle.js'
+  },
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
@@ -12,7 +16,7 @@ module.exports = {
       {
         test: [/\.jsx?$/, /\.js?$/ ],
         exclude: /node-modules/,
-        loader: 'babel-loader',
+        loader: 'babel',
         query: {
           presets: ['react', 'es2015'],
           plugins: ['transform-object-rest-spread']
