@@ -61,7 +61,7 @@ or Run Auto Updating Tests with:
 - `POST /api/reports`
   - creates a new report
 - `DELETE /api/reports/:id`
-  - Deletes a story
+  - Deletes a report
 
 
   # Schema Information
