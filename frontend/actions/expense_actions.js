@@ -28,10 +28,10 @@ export const RESET_DELETED_EXPENSE = 'RESET_DELETED_EXPENSE';
 export function fetchExpenses(token) {
   const request = axios({
     method: 'get',
-    url: `/api/expenses`,
+    url: '/api/expenses',
     headers: {
-    'token': `${token}`
-  }
+      'token': `${token}`
+    }
   });
 
   return {
@@ -59,7 +59,7 @@ export function createExpense(props, tokenFromStorage) {
   const request = axios({
     method: 'post',
     data: props,
-    url: `/api/expenses`,
+    url: '/api/expenses',
     headers: {
       'token': `${tokenFromStorage}`
     }
@@ -111,22 +111,22 @@ export function updateExpenseSuccess(expense) {
 export function resetNewExpense() {
   return {
     type: RESET_NEW_EXPENSE
-  }
+  };
 }
-;
+
 
 export function resetDeletedExpense() {
   return {
     type: RESET_DELETED_EXPENSE
-  }
-};
+  };
+}
 
 export function fetchExpense(id, token) {
   const request = axios({
     url: `/api/expenses/${id}`,
     method: 'get',
     headers: { 'token': token }
-  })
+  });
 
   return {
     type: FETCH_EXPENSE,
@@ -152,7 +152,7 @@ export function fetchExpenseFailure(error) {
 export function resetActiveExpense() {
   return {
     type: RESET_ACTIVE_EXPENSE
-  }
+  };
 }
 
 

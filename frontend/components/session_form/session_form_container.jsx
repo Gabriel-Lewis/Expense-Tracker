@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { login, loginUserSuccess, logout, signup, signUpUserSuccess} from '../../actions/session_actions';
+import { login, loginUserSuccess, logout, signup, signUpUserSuccess } from '../../actions/session_actions';
 import SessionForm from './session_form';
 
 const mapStateToProps = ({ session }) => ({
@@ -12,19 +12,19 @@ const mapDispatchToProps = (dispatch, { location }) => {
   const processForm = (formType === 'login') ? login : signup;
 
   return {
-    signup: (values) =>  {
+    signup: (values) => {
       return dispatch(signup(values))
       .then((result) => {
-          localStorage.setItem('jwtToken', result.payload.data.token);
-         dispatch(signUpUserSuccess(result.payload.data.user));
-      })
+        localStorage.setItem('jwtToken', result.payload.data.token);
+        dispatch(signUpUserSuccess(result.payload.data.user));
+      });
     },
-    login: (values) =>  {
+    login: (values) => {
       return dispatch(login(values))
       .then((result) => {
-          localStorage.setItem('jwtToken', result.payload.data.token);
-         dispatch(loginUserSuccess(result.payload.data.user));
-      })
+        localStorage.setItem('jwtToken', result.payload.data.token);
+        dispatch(loginUserSuccess(result.payload.data.user));
+      });
     },
     formType
   };

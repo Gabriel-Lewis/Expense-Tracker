@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 require('mongoose-currency').loadType(mongoose);
-var Currency = mongoose.Types.Currency;
+const Currency = mongoose.Types.Currency;
 
-var ExpenseSchema = new mongoose.Schema({
+const ExpenseSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "can't be blank"],
@@ -17,7 +17,7 @@ var ExpenseSchema = new mongoose.Schema({
     required: [true, "can't be blank"]
   },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-}, {timestamps: true});
+}, { timestamps: true });
 
 ExpenseSchema.methods.toJSONFor = (user) => {
   return {
@@ -32,4 +32,4 @@ ExpenseSchema.methods.toJSONFor = (user) => {
 
 const Expense = mongoose.model('Expense', ExpenseSchema);
 
-module.exports = { Expense }
+module.exports = { Expense };

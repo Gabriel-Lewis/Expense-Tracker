@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
-export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
+export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
+export const RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_ERROR = 'LOGIN_USER_ERROR';
@@ -13,15 +13,15 @@ export const USER_FROM_TOKEN_SUCCESS = 'USER_FROM_TOKEN_SUCCESS';
 export const USER_FROM_TOKEN_FAILURE = 'USER_FROM_TOKEN_FAILURE';
 
 export function signup(user) {
-  let request = axios.post('/api/users', user)
+  const request = axios.post('/api/users', user);
   return {
     type: SIGN_UP_USER,
     payload: request
-  }
+  };
 }
 
 export function login(user) {
-  const request = axios.post(`/api/session`, user)
+  const request = axios.post('/api/session', user);
   return {
     type: LOGIN_USER,
     payload: request
@@ -39,12 +39,12 @@ export function userFromToken(tokenFromStorage) {
     method: 'get',
     url: '/api/session',
     headers: { 'token': `${tokenFromStorage}` }
-  })
+  });
 
-    return {
-        type: USER_FROM_TOKEN,
-        payload: request
-    }
+  return {
+    type: USER_FROM_TOKEN,
+    payload: request
+  };
 }
 
 export function userFromTokenSuccess(currentUser) {

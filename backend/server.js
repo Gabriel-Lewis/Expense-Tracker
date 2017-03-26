@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 
 require('../config/index');
 const app = express();
-const {db} = require('./db/db');
-const port = process.env.PORT || 3000
+const { db } = require('./db/db');
+const port = process.env.PORT || 3000;
 
 const user = require('./db/models/user');
 const Expense = require('./db/models/expense');
@@ -18,12 +18,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(require('./routes'));
-app.use(express.static(path.resolve(__dirname , '../static')))
-app.get('/*', function (request, response){
-    response.sendFile(path.resolve(__dirname, '../static', 'index.html'))
-})
+app.use(express.static(path.resolve(__dirname , '../static')));
+app.get('/*', (request, response) => {
+  response.sendFile(path.resolve(__dirname, '../static', 'index.html'));
+});
 
 
-app.listen(port)
+app.listen(port);
 
-module.exports = { app }
+module.exports = { app };

@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var {Expense} = require('./expense');
+const { Expense } = require('./expense');
 
-var ReportSchema = new mongoose.Schema({
+const ReportSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   expenseList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Expense' }],
   startDate: {
@@ -16,9 +16,9 @@ var ReportSchema = new mongoose.Schema({
   totalSpent: {
     type: Number
   }
-}, {timestamps: true});
+}, { timestamps: true });
 
-ReportSchema.methods.toJSONFor = function(user){
+ReportSchema.methods.toJSONFor = function(user) {
   return {
     id: this._id,
     createdAt: this.createdAt,
@@ -29,25 +29,25 @@ ReportSchema.methods.toJSONFor = function(user){
   };
 };
 
-ReportSchema.pre('save', function (next) {
-  const report = this
-  Expense.find({author: report.author})
+ReportSchema.pre('save', function(next) {
+  const report = this;
+  Expense.find({ author: report.author })
   .where('transactionDate')
   .lt(report.endDate)
   .gt(report.startDate)
   .then((expenses) => {
-    let total = 0
+    let total = 0;
     expenses.forEach((expense) => {
-      total += expense.amount
+      total += expense.amount;
     });
     report.totalSpent = total;
     report.expenseList = expenses;
-    next()
+    next();
   }, (e) => {
-    next()
-  })
-})
+    next();
+  });
+});
 
 const Report = mongoose.model('Report', ReportSchema);
 
-module.exports = {Report}
+module.exports = { Report };

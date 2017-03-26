@@ -29,10 +29,10 @@ export const RESET_DELETED_REPORT = 'RESET_DELETED_REPORT';
 export function fetchReports(token) {
   const request = axios({
     method: 'get',
-    url: `/api/reports`,
+    url: '/api/reports',
     headers: {
-    'token': `${token}`
-  }
+      'token': `${token}`
+    }
   });
 
   return {
@@ -60,7 +60,7 @@ export function createReport(props, tokenFromStorage) {
   const request = axios({
     method: 'post',
     data: props,
-    url: `/api/reports`,
+    url: '/api/reports',
     headers: {
       'token': `${tokenFromStorage}`
     }
@@ -112,22 +112,22 @@ export function updateReportSuccess(expense) {
 export function resetNewReport() {
   return {
     type: RESET_NEW_REPORT
-  }
+  };
 }
-;
+
 
 export function resetDeletedReport() {
   return {
     type: RESET_DELETED_REPORT
-  }
-};
+  };
+}
 
 export function fetchReport(id, token) {
   const request = axios({
     url: `/reports/${id}`,
     method: 'get',
     headers: { 'token': token }
-  })
+  });
 
   return {
     type: FETCH_REPORT,
@@ -153,7 +153,7 @@ export function fetchReportFailure(error) {
 export function resetActiveReport() {
   return {
     type: RESET_ACTIVE_REPORT
-  }
+  };
 }
 
 

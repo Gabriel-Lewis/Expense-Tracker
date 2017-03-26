@@ -12,35 +12,35 @@ import store from './store/store';
 
 export const onEnterFetchExpense = (nextState) => {
   store.dispatch(fetchExpense(nextState.params.expenseId, localStorage.getItem('jwtToken'))).then((response) => {
-    store.dispatch(fetchExpenseSuccess(response.payload.data))
-  })
-}
+    store.dispatch(fetchExpenseSuccess(response.payload.data));
+  });
+};
 
 export const onEnterFetchReport = (nextState) => {
   store.dispatch(fetchReport(nextState.params.reportId, localStorage.getItem('jwtToken'))).then((response) => {
-    store.dispatch(fetchReportSuccess(response.payload.data))
-  })
-}
+    store.dispatch(fetchReportSuccess(response.payload.data));
+  });
+};
 
 export const ensureLoggedIn = (nextState, replace) => {
-    let token = localStorage.getItem('jwtToken');
-  };
+  const token = localStorage.getItem('jwtToken');
+};
 
 export const redirectIfLoggedIn = (nextState, replace) => {
-    const currentUser = store.getState().session.user;
-    if (currentUser) {
-      replace('/');
-    }
+  const currentUser = store.getState().session.user;
+  if (currentUser) {
+    replace('/');
   }
+};
 
 export default (
-  <Route path="/" component={ RootContainer }>
-    <IndexRoute component={ FrontPageContainer } />
-    <Route path="/login" component={ SessionFormContainer } />
-    <Route path="/signup" component={ SessionFormContainer } />
-    <Route path='/new-expense' component={ NewExpenseContainer } />
+  <Route path="/" component={RootContainer}>
+    <IndexRoute component={FrontPageContainer} />
+    <Route path="/login" component={SessionFormContainer} />
+    <Route path="/signup" component={SessionFormContainer} />
+    <Route path="/new-expense" component={NewExpenseContainer} />
     <Route path="/expenses/:expenseId/edit" component={NewExpenseContainer} onEnter={onEnterFetchExpense} />
-    <Route path='/new-report' component={ ReportFormContainer } />
+    <Route path="/new-report" component={ReportFormContainer} />
     <Route path="/reports/:reportId/edit" component={ReportFormContainer} onEnter={onEnterFetchReport} />
   </Route>
 );

@@ -1,18 +1,18 @@
-import React,{Component} from 'react';
+import React,{ Component } from 'react';
 import ReportItem from './report_item';
 
 export default class ReportIndex extends Component {
 
-    constructor(props){
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentDidMount() {
-      this.props.fetchReports()
-    }
+  componentDidMount() {
+    this.props.fetchReports();
+  }
 
-    render() {
-        return (
+  render() {
+    return (
             <div className="report-index">
               <h3>Reports</h3>
               <ul>
@@ -30,6 +30,6 @@ export default class ReportIndex extends Component {
               }
               </ul>
             </div>
-        );
-    }
+    );
+  }
 }

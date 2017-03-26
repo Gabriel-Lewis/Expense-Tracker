@@ -16,26 +16,26 @@ export default class App extends Component {
             <Link to="/login" activeClassName="current">Login</Link>
             <Link to="/signup" activeClassName="current">Sign up!</Link>
 					</div>
-      </nav>)
-    } else {
-      return (
+      </nav>);
+    }
+    return (
         <nav>
 					<div className="logo">
 						<Link to="/"><h3>Expense Tracker</h3></Link>
 					</div>
 					<div className="links">
-						<Link to='/new-expense'>New Expense</Link>
-						<Link to='/new-report'>New Report</Link>
+						<Link to="/new-expense">New Expense</Link>
+						<Link to="/new-report">New Report</Link>
 	        <button
-            className='logout-button'
-	          onClick={this.props.resetUser}
+  className="logout-button"
+  onClick={this.props.resetUser}
 	          >Logout</button>
 				</div>
       </nav>
-    )
-    }
+    );
 
-  };
+
+  }
 
 
   render() {

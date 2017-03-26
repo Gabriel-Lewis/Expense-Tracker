@@ -1,25 +1,25 @@
-import React,{Component} from 'react';
-import {connect} from 'react-redux';
-import {fetchReports, fetchReportsSuccess} from '../../actions/report_actions';
+import React,{ Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchReports, fetchReportsSuccess } from '../../actions/report_actions';
 import ReportIndex from './report_index';
 
-const mapStateToProps = ({report}) => {
+const mapStateToProps = ({ report }) => {
   return {
-  reports: report.reports
-  }
-}
+    reports: report.reports
+  };
+};
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   fetchReports: () => {
-    let token = localStorage.getItem('jwtToken');
-    if(!token || token === '') {
+    const token = localStorage.getItem('jwtToken');
+    if (!token || token === '') {
       return;
     }
     dispatch(fetchReports(token))
       .then((res) => {
-        dispatch(fetchReportsSuccess(res.payload.data.reports))
-      })
+        dispatch(fetchReportsSuccess(res.payload.data.reports));
+      });
   },
-})
+});
 
-export default connect ( mapStateToProps, mapDispatchToProps)(ReportIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(ReportIndex);

@@ -1,18 +1,18 @@
-import React,{Component} from 'react';
+import React,{ Component } from 'react';
 import ExpenseItem from './expense_item';
 
 export default class ExpenseIndex extends Component {
 
-    constructor(props){
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    componentWillMount() {
-        this.props.fetchExpenses()
-    }
+  componentWillMount() {
+    this.props.fetchExpenses();
+  }
 
-    render() {
-        return (
+  render() {
+    return (
             <div className="expense-index">
               <h3>Expenses</h3>
               <ul>
@@ -31,6 +31,6 @@ export default class ExpenseIndex extends Component {
               }
               </ul>
             </div>
-        );
-    }
+    );
+  }
 }
